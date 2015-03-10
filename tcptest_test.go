@@ -3,6 +3,7 @@ package tcptest
 import (
 	"fmt"
 	"net"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -46,6 +47,12 @@ func TestServer(t *testing.T) {
 	}
 	if server.ReceivedLine("incomplete") {
 		t.Error("server should only count complete lines as received")
+	}
+
+	expectLines := []string{"cool", "neat"}
+	got := server.Lines()
+	if !reflect.DeepEqual(got, expectLines) {
+		t.Errorf("got lines: %#v", got)
 	}
 
 	conn.Close()

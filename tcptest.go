@@ -58,6 +58,15 @@ func (s *Server) WaitForLines(count int, timeout time.Duration) error {
 	}
 }
 
+// Lines returns all received lines.
+func (s *Server) Lines() []string {
+	lines := make([]string, len(s.lines))
+	for i, line := range s.lines {
+		lines[i] = line
+	}
+	return lines
+}
+
 // Received returns true if the given string has been received.
 func (s *Server) Received(expect string) bool {
 	for _, line := range s.lines {
