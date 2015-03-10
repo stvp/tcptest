@@ -29,8 +29,11 @@ func TestServer(t *testing.T) {
 		t.Error(err)
 	}
 
-	if !server.Received("cool") {
-		t.Error("didn't receive 'cool'")
+	if !server.Received("oo") {
+		t.Error("didn't receive 'oo'")
+	}
+	if !server.ReceivedLine("cool") {
+		t.Error("didn't receive line 'cool'")
 	}
 
 	err = server.WaitForLines(3, time.Millisecond)
@@ -39,6 +42,9 @@ func TestServer(t *testing.T) {
 	}
 
 	if server.Received("incomplete") {
+		t.Error("server should only count complete lines as received")
+	}
+	if server.ReceivedLine("incomplete") {
 		t.Error("server should only count complete lines as received")
 	}
 

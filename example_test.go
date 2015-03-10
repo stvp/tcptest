@@ -26,7 +26,7 @@ func ExampleServer() {
 
 	server.WaitForLines(2, time.Second)
 
-	if server.Received("hello") && server.Received("world!") {
+	if server.ReceivedLine("hello") && server.Received("world") {
 		fmt.Printf("received!")
 	}
 	// Output: received!

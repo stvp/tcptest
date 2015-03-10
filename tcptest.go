@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"strings"
 	"sync"
 	"time"
 )
@@ -59,6 +60,17 @@ func (s *Server) WaitForLines(count int, timeout time.Duration) error {
 
 // Received returns true if the given string has been received.
 func (s *Server) Received(expect string) bool {
+	for _, line := range s.lines {
+		if strings.Contains(line, expect) {
+			return true
+		}
+	}
+	return false
+}
+
+// Received returns true if the given full line (minus terminating newline) has
+// been received.
+func (s *Server) ReceivedLine(expect string) bool {
 	for _, got := range s.lines {
 		if got == expect {
 			return true
