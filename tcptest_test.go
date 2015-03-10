@@ -13,7 +13,7 @@ func TestServer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	conn, err := net.Dial("tcp", server.Address)
+	conn, err := net.Dial("tcp", server.Address())
 	if err != nil {
 		t.Fatal(err)
 	}

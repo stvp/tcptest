@@ -9,7 +9,6 @@ import (
 )
 
 type Server struct {
-	Address  string
 	listener net.Listener
 	lines    []string
 	wg       sync.WaitGroup
@@ -25,7 +24,6 @@ func NewServer() (server *Server, err error) {
 	}
 
 	server = &Server{
-		Address:  listener.Addr().String(),
 		listener: listener,
 		lines:    []string{},
 		wg:       sync.WaitGroup{},
@@ -33,6 +31,11 @@ func NewServer() (server *Server, err error) {
 	go server.run()
 
 	return
+}
+
+// Address returns the host:port string for this Server.
+func (s *Server) Address() string {
+	return s.listener.Addr().String()
 }
 
 func (s *Server) WaitForLines(count int, timeout time.Duration) error {
